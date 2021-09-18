@@ -5,9 +5,71 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F3F3F3;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.autocomplete {
+	position: relative;
+	display: inline-block;
+  width: 100%;
+}
+.autocomplete-items-container {
+	position: absolute;
+	z-index: 99;
+	top: 100%;
+	left: 0;
+	right: 0;
+  background-color: #F5F5F5;
+  max-height: 75vh;
+  overflow: auto;
+}
+
+.autocomplete-items {
+  border-bottom: 1px solid #DEDEDE;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.autocomplete-items:hover {
+  background-color: #eaf9ff;
+}
+
+.container-msg {
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 90%;
+}
+
+.container-msg-sent {
+  background-color: #CEF0FF;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.container-msg-received {
+  background-color: #FFE4CC;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.content-message {
+  font-size: 14px;
+}
+
+.inbox-item {
+  border-bottom: 1px solid rgb(219, 219, 219);
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px
+}
+
+.inbox-item:hover {
+  background-color: #eaf9ff;
 }
