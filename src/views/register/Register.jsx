@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom'
-import { Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Label, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Label, Row, Spinner } from "reactstrap";
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import validations from './validations'
 
 import userCont from '../../redux/user/userController'
@@ -10,6 +10,7 @@ export default function Register() {
    const history = useHistory()
    const dispatch = useDispatch()
    const { register, formState: { errors }, handleSubmit } = useForm();
+   const user = useSelector(store => store.user)
 
    const onSubmit = async (values) => {
       const resp = await dispatch(userCont.register(values))
@@ -54,10 +55,13 @@ export default function Register() {
                            <small className='text-danger'>{errors?.password?.message}</small>
                         </FormGroup>
                         <FormGroup className='mt-3'>
-                           <Button type='submit' style={{ width: '100%' }} color='primary'>Registrarme</Button>
+                           <Button type='submit' style={{ width: '100%' }} color='primary' disabled={user.loading}>
+                              {user.loading && <Spinner size='sm'>{''}</Spinner>}{' '}
+                              Registrarme
+                           </Button>
                         </FormGroup>
                         <FormGroup className='mt-1'>
-                           <Button style={{ width: '100%' }} color='secondary' onClick={goToLogin}>Ir a inicio de sesión</Button>
+                           <Button style={{ width: '100%' }} color='secondary' onClick={goToLogin} disabled={user.loading}>Ir a inicio de sesión</Button>
                         </FormGroup>
                      </Form>
                   </CardBody>

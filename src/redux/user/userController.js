@@ -13,6 +13,9 @@ const controller = {
       await dispatch(actions.loading())
       const {data} = await axios.post(`${base}/login`, _data)
       await dispatch(actions.list(data))
+      if (!data.success) {
+         alert('Usuario o contraseña incorrecta')
+      }
       return data;
    },
    filter: (_data) => async (dispatch, getState) => {
@@ -31,6 +34,9 @@ const controller = {
       await dispatch(actions.loading())
       const {data} = await axios.post(`${base}/register`, _data)
       await dispatch(actions.list(data))
+      if (!data.success) {
+         alert('No se ha podido registrar tu usuario')
+      }
       return data;
    },
 }

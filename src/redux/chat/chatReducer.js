@@ -19,13 +19,13 @@ const countrySlice = createSlice({
          state.list = (action.payload.success) ? action.payload.values : []
       },
       getChat(state, action) {
-         state.loading = false
          state.focusUserId = action.payload.userToId
          if (action.payload.success) {
             state.messages = action.payload.values.messages
          } else {
             state.messages = []
          }
+         state.loading = false
       },
       sendMessage(state, action) {
          state.loading = false

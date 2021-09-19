@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Button, Card, CardBody, CardHeader, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Form, Input, InputGroup, InputGroupAddon, Spinner } from 'reactstrap';
 import { FaSearch } from 'react-icons/fa';
 import useLocalStorage from '../../helpers/useLocalStorage';
 
@@ -16,11 +16,16 @@ export default function Inbox(props) {
    const [search, setSearch] = useState('')
    const [userList, setUserList] = useState([])
    const [userLocal] = useLocalStorage('csc_user')
+   const [loading, setLoading] = useState(true)
 
    //console.log(...chat.list)
 
    useEffect(() => {
-      dispatch(chatCont.list())
+      const chatList = async () => {
+         await dispatch(chatCont.list())
+         setLoading(false)
+      }
+      chatList()
    }, [dispatch])
 
    useEffect(() => {
@@ -79,8 +84,13 @@ export default function Inbox(props) {
                </div>
             </Form>
          </CardHeader>
-         <CardBody style={{overflow: 'auto', backgroundColor:''}}>
-            {chat.list?.length > 0 &&
+         <CardBody style={{overflow: 'auto', backgroundColor:'', padding: (loading) ? 0 : 20}}>
+            {loading  &&
+               <div style={{height:'100%', backgroundColor:'#F6F6F6', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                  <Spinner color='primary'>{''}</Spinner>
+               </div>
+            }
+            {!loading && chat.list?.length > 0 &&
                chat.list.map((chat, i) => (
                   <InboxContent key={i} chat={chat} userLocalId={userLocal._id} selectUser={selectUser} />
                ))

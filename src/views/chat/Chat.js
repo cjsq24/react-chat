@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { Button, Card, CardBody, CardFooter, CardHeader, Col, Form, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardFooter, CardHeader, Col, Form, Input, InputGroup, InputGroupAddon, Row, Spinner } from 'reactstrap';
 import { FaPaperPlane } from 'react-icons/fa';
 import MsgContainer from '../../components/MsgContainer';
 import useLocalStorage from '../../helpers/useLocalStorage';
@@ -18,6 +18,7 @@ export default function Chat() {
    const chat = useSelector(store => store.chat)
    const [message, setMessage] = useState('')
    const [userLocal] = useLocalStorage('csc_user')
+   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
       if (params?.userToId) {
@@ -26,6 +27,7 @@ export default function Chat() {
             if (resp.success) {
                setUserSelected(resp.values)
                await dispatch(chatCont.getChat(params.userToId))
+               setLoading(false)
             }
          }
          getChat()
@@ -58,32 +60,46 @@ export default function Chat() {
       <Row style={{ height: '91vh' }}>
          <Col md='8' sm='8' xs='12' className='p-3' style={{ height: '100%' }}>
             <Card style={{ height: '100%' }}>
-               {userSelected &&
+               {params?.userToId &&
                   <>
-                     <CardHeader style={{backgroundColor:'#EBFAFF'}}>
-                        <div>
-                           <h6>
-                              {`${userSelected.name} ${userSelected.last_name}`}
-                              <small style={{ marginLeft: 10 }}>({userSelected.email})</small>
-                           </h6>
-                        </div>
+                     <CardHeader style={{ backgroundColor: '#EBFAFF' }}>
+                        {userSelected &&
+                           <div>
+                              <h6>
+                                 {`${userSelected.name} ${userSelected.last_name}`}
+                                 <small style={{ marginLeft: 10 }}>({userSelected.email})</small>
+                              </h6>
+                           </div>
+                        }
                      </CardHeader>
-                     <CardBody className='d-flex' style={{flexDirection: 'column-reverse', overflowY: 'scroll', backgroundColor:''}}>
-                        <div style={{width:'100%'}}>
-                           {chat.messages?.length > 0 &&
-                              chat.messages.map((message, i) => (
-                                 <MsgContainer key={i} userLocalId={userLocal._id} message={message} />
-                              ))
-                           }
-                        </div>
+                     <CardBody className='d-flex' style={{ flexDirection: 'column-reverse', overflowY: 'scroll', backgroundColor: '' }}>
+                        {loading &&
+                           <div style={{ height: '100%', backgroundColor: '', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <Spinner color='primary'>{''}</Spinner>
+                           </div>
+                        }
+                        {!loading && chat.messages?.length > 0 &&
+                           <div style={{ width: '100%' }}>
+                              {
+                                 chat.messages.map((message, i) => (
+                                    <MsgContainer key={i} userLocalId={userLocal._id} message={message} />
+                                 ))
+                              }
+                           </div>
+                        }
                      </CardBody>
-                     <CardFooter style={{backgroundColor:'#EBFAFF'}}>
+                     <CardFooter style={{ backgroundColor: '#EBFAFF' }}>
                         <Form onSubmit={sendMessage}>
                            <InputGroup>
-                              <Input placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} />
+                              <Input placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} disabled={chat.loading} />
                               <InputGroupAddon addonType="append">
-                                 <Button type='submit' color="primary">
-                                    <FaPaperPlane />
+                                 <Button type='submit' color="primary" disabled={chat.loading}>
+                                    {chat.loading ? (
+                                       <Spinner size='sm'>{''}</Spinner>
+                                    ) : (
+                                       <FaPaperPlane />
+                                    )
+                                    }
                                  </Button>
                               </InputGroupAddon>
                            </InputGroup>
