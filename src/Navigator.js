@@ -16,7 +16,7 @@ export default function Navigator() {
             <PrivateRoute path='/dashboard' component={Dashboard} />
             <PrivateRoute path='/chat/:userToId' component={Chat} />
             <PrivateRoute path='/chat' component={Chat} />
-            <PrivateRoute exact path='/' component={Dashboard} />
+            <PrivateRoute exact path='/' component={Chat} />
             <Route path='*'>
                <h1>Error 404</h1>
             </Route>

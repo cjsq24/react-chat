@@ -17,7 +17,7 @@ export default function Login() {
       const resp = await dispatch(userCont.login(values))
       if (resp.success) {
          auth.login(resp.values)
-         history.push('/dashboard')
+         history.push('/chat')
       }
    }
 

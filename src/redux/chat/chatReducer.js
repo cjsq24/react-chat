@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
    list: [],
    messages: [],
+   focusUserId: null,
    loading: false
 }
 
@@ -19,6 +20,7 @@ const countrySlice = createSlice({
       },
       getChat(state, action) {
          state.loading = false
+         state.focusUserId = action.payload.userToId
          if (action.payload.success) {
             state.messages = action.payload.values.messages
          } else {
@@ -29,9 +31,14 @@ const countrySlice = createSlice({
          state.loading = false
          if (action.payload.success) {
             state.messages = action.payload.values.messages
-            console.log(action.payload)
             state.list = action.payload.newChatList
          }
+      },
+      receiveMessage(state, action) {
+         //state.loading = false
+         //state.messages = action.payload.messages
+         state.messages = action.payload.messages
+         state.list = action.payload.newChatList
       },
    }
 })

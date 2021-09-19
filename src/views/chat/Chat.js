@@ -60,7 +60,7 @@ export default function Chat() {
             <Card style={{ height: '100%' }}>
                {userSelected &&
                   <>
-                     <CardHeader>
+                     <CardHeader style={{backgroundColor:'#EBFAFF'}}>
                         <div>
                            <h6>
                               {`${userSelected.name} ${userSelected.last_name}`}
@@ -68,7 +68,7 @@ export default function Chat() {
                            </h6>
                         </div>
                      </CardHeader>
-                     <CardBody className='d-flex' style={{flexDirection: 'column-reverse', overflowY: 'scroll'}}>
+                     <CardBody className='d-flex' style={{flexDirection: 'column-reverse', overflowY: 'scroll', backgroundColor:''}}>
                         <div style={{width:'100%'}}>
                            {chat.messages?.length > 0 &&
                               chat.messages.map((message, i) => (
@@ -77,7 +77,7 @@ export default function Chat() {
                            }
                         </div>
                      </CardBody>
-                     <CardFooter>
+                     <CardFooter style={{backgroundColor:'#EBFAFF'}}>
                         <Form onSubmit={sendMessage}>
                            <InputGroup>
                               <Input placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} />

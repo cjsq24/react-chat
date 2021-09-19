@@ -28,11 +28,11 @@ export default function Layout({ children }) {
    }
 
    return (
-      <div className='container-fluid'>
-         <Navbar color="light" light expand="md">
-            <NavLinkRouter to='/dashboard' className='navbar-brand'>
+      <div>
+         <Navbar color="light px-4" light expand="md">
+            {/*<NavLinkRouter to='/dashboard' className='navbar-brand'>
                reactstrap
-            </NavLinkRouter>
+            </NavLinkRouter>*/}
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                <Nav className="mr-auto" navbar>
@@ -61,7 +61,9 @@ export default function Layout({ children }) {
                </Nav>
             </Collapse>
          </Navbar>
-         {children}
+         <div className='container-fluid'>
+            {children}
+         </div>
       </div>
    );
 }

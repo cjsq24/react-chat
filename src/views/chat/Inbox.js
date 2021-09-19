@@ -47,7 +47,7 @@ export default function Inbox(props) {
 
    return (
       <Card style={{ height: '100%' }}>
-         <CardHeader>
+         <CardHeader style={{backgroundColor:'#EBFAFF'}}>
             <Form onSubmit={filterUser}>
                <div className='autocomplete'>
                   <InputGroup>
@@ -79,7 +79,7 @@ export default function Inbox(props) {
                </div>
             </Form>
          </CardHeader>
-         <CardBody>
+         <CardBody style={{overflow: 'auto', backgroundColor:''}}>
             {chat.list?.length > 0 &&
                chat.list.map((chat, i) => (
                   <InboxContent key={i} chat={chat} userLocalId={userLocal._id} selectUser={selectUser} />
