@@ -13,6 +13,7 @@ export default function socket(store) {
 
    ioClient.on("receive-message", async (data) => {
       try {
+         console.log('recibimos del socket')
          const myLocalData = JSON.parse(await window.localStorage.getItem('csc_user'))
          if (data.userToId === myLocalData._id) {
             store.dispatch(chatCont.receiveMessage({

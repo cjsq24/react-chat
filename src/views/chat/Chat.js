@@ -22,6 +22,8 @@ export default function Chat() {
 
    useEffect(() => {
       if (params?.userToId) {
+         setLoading(true)
+         setUserSelected()
          const getChat = async () => {
             const resp = await dispatch(userCont.get(params.userToId))
             if (resp.success) {
