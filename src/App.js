@@ -11,7 +11,6 @@ const store = storeConfig()
 
 socket(store)
 
-
 function App() {
   useEffect(() => {
     //ioClient.emit('hello', 'Te saludo desde react')
