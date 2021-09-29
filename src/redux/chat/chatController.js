@@ -40,7 +40,7 @@ const controller = {
             newChatList = newChatList.filter((newChat, i) => i !== indexList)
             newChatList.unshift({
                ...chat.list[indexList],
-               messages: data.values.messages[data.values.messages.length - 1]
+               messages: data.values.messages[0]
             })
          } else {
             newChatList.unshift({
@@ -83,7 +83,7 @@ const controller = {
       }
 
       if (focusUserId && focusUserId === userToId) {
-         messages.push(_data.messages)
+         messages.unshift(_data.messages)
       }
       
       await dispatch(actions.receiveMessage({messages, newChatList}))

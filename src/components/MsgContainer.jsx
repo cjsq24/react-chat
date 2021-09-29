@@ -18,7 +18,8 @@ export default function MsgContainer(props) {
             <span style={{}} className={`content-message`}>{message.content}</span>
             <small style={{fontSize: 10, color: 'gray'}} className={`content-message`}>
                {(message?.date) ? 
-                  moment(message.date).fromNow()
+                  //moment(message.date).fromNow()
+                  moment(message.date).format('HH:mm a')
                   : ''
                }
             </small>

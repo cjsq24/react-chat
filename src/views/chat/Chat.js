@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Button, Card, CardBody, CardFooter, CardHeader, Col, Form, Input, InputGroup, InputGroupAddon, Row, Spinner } from 'reactstrap';
@@ -12,6 +12,7 @@ import userCont from '../../redux/user/userController'
 import Inbox from "./Inbox";
 
 export default function Chat() {
+   const textInput = useRef(null);
    const params = useParams()
    const dispatch = useDispatch()
    const [userSelected, setUserSelected] = useState()
@@ -55,6 +56,7 @@ export default function Chat() {
 
       if (resp.success) {
          setMessage('')
+         textInput.current.focus();
       }
    }
 
@@ -81,7 +83,7 @@ export default function Chat() {
                            </div>
                         }
                         {!loading && chat.messages?.length > 0 &&
-                           <div style={{ width: '100%' }}>
+                           <div style={{ width: '100%', display: 'flex', flexDirection: 'column-reverse' }}>
                               {
                                  chat.messages.map((message, i) => (
                                     <MsgContainer key={i} userLocalId={userLocal._id} message={message} />
@@ -93,7 +95,8 @@ export default function Chat() {
                      <CardFooter style={{ backgroundColor: '#EBFAFF' }}>
                         <Form onSubmit={sendMessage}>
                            <InputGroup>
-                              <Input placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} disabled={chat.loading} />
+                              {/*<Input placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} disabled={chat.loading} ref={textInput} />*/}
+                              <input className='form-control' placeholder='Escribe tu mensaje aquí' value={message} onChange={(e) => setMessage(e.target.value)} disabled={chat.loading} ref={textInput} />
                               <InputGroupAddon addonType="append">
                                  <Button type='submit' color="primary" disabled={chat.loading}>
                                     {chat.loading ? (

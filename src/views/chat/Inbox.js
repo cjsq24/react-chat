@@ -18,8 +18,6 @@ export default function Inbox(props) {
    const [userLocal] = useLocalStorage('csc_user')
    const [loading, setLoading] = useState(true)
 
-   //console.log(...chat.list)
-
    useEffect(() => {
       const chatList = async () => {
          await dispatch(chatCont.list())
@@ -91,8 +89,8 @@ export default function Inbox(props) {
                </div>
             }
             {!loading && chat.list?.length > 0 &&
-               chat.list.map((chat, i) => (
-                  <InboxContent key={i} chat={chat} userLocalId={userLocal._id} selectUser={selectUser} />
+               chat.list.map((ele, i) => (
+                  <InboxContent key={i} chat={ele} userLocalId={userLocal._id} selectUser={selectUser} focusUserId={chat?.focusUserId} />
                ))
             }
          </CardBody>
